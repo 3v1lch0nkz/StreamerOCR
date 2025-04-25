@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamerOCR Overview</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: #2c3e50;
+        }
+        
+        .key-combo {
+            background-color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            border: 1px solid #dee2e6;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>StreamerOCR Overview</h1>
+    
+    <div class="section">
+        <h2>What is StreamerOCR?</h2>
+        <p>
+            StreamerOCR is a powerful desktop application designed for streamers and content creators. It enables real-time OCR (Optical Character Recognition)
+            on selected screen regions and converts the recognized text to speech. The application is particularly useful for:
+        </p>
+        <ul>
+            <li>Streamers who need to read chat messages or game text</li>
+            <li>Content creators working with text-heavy applications</li>
+            <li>Users who need quick text extraction from their screen</li>
+            <li>Accessibility support for reading on-screen text</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Key Features</h2>
+        <ul>
+            <li>Multi-monitor support for flexible region selection</li>
+            <li>Real-time OCR processing using Tesseract</li>
+            <li>Text-to-Speech conversion with configurable voices</li>
+            <li>Global hotkeys for quick access to all features</li>
+            <li>Region persistence and management between sessions</li>
+            <li>Support for multiple saved regions</li>
+            <li>Easy region renaming and deletion</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Quick Start Guide</h2>
+        <ol>
+            <li>Launch StreamerOCR</li>
+            <li>Select your target monitor from the dropdown</li>
+            <li>Click "Select Region" or press <span class="key-combo">Alt + Shift + M</span></li>
+            <li>Click and drag to select the desired area</li>
+            <li>Name your region when prompted</li>
+            <li>Press <span class="key-combo">Alt + Shift + Space</span> to process the region</li>
+            <li>The application will read aloud any text found in the region</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Keyboard Shortcuts</h2>
+        <ul>
+            <li><span class="key-combo">Alt + Shift + Space</span> - Process the selected region</li>
+            <li><span class="key-combo">Alt + Shift + M</span> - Select a new region</li>
+            <li><span class="key-combo">Alt + Shift + N</span> - Exit application</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Best Practices</h2>
+        <ul>
+            <li>For optimal OCR results:
+                <ul>
+                    <li>Ensure text is clear and well-contrasted</li>
+                    <li>Select regions with minimal background noise</li>
+                    <li>Avoid selecting regions with moving elements</li>
+                </ul>
+            </li>
+            <li>Region Management:
+                <ul>
+                    <li>Use descriptive names for your regions</li>
+                    <li>Delete unused regions to keep your list clean</li>
+                    <li>Rename regions if their purpose changes</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>System Requirements</h2>
+        <ul>
+            <li>Windows 10 or later</li>
+            <li>Tesseract OCR engine (see installation guide)</li>
+            <li>Python 3.8 or later (if running from source)</li>
+            <li>Minimum 4GB RAM</li>
+            <li>Dedicated graphics card recommended</li>
+        </ul>
+    </div>
+
+    <div class="note">
+        <h3>Note:</h3>
+        <p>For detailed documentation, installation instructions, and troubleshooting, please refer to the main <a href="DOCS.html">documentation</a>.</p>
+    </div>
+</body>
+</html> 

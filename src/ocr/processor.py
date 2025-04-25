@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QScreen
 from PyQt5.QtCore import QBuffer, QByteArray
 import io
+import mss
+import numpy as np
 
 class OCRProcessor:
     """Handles OCR processing of screen regions."""
@@ -28,6 +30,9 @@ class OCRProcessor:
                     print(f"Found Tesseract at: {path}")
                     pytesseract.pytesseract.tesseract_cmd = path
                     break
+
+        # Initialize the screen capture tool
+        self.sct = mss.mss()
 
     def capture_region(self, region):
         """Capture a specific region of the screen using PyQt5."""
@@ -73,12 +78,53 @@ class OCRProcessor:
             print(f"Error during OCR processing: {e}")
             return ""
 
-    def process_region(self, region):
-        """Capture and process a screen region."""
-        image = self.capture_region(region)
-        return self.process_image(image)
+    def process_region(self, region, monitor_index=0):
+        """
+        Process a region of the screen with OCR.
+        
+        Args:
+            region (tuple): (x, y, width, height) of the region to capture
+            monitor_index (int): Index of the monitor to capture from (0-based)
+            
+        Returns:
+            str: Extracted text from the region
+        """
+        try:
+            # Get the monitor geometry
+            monitor = self.sct.monitors[monitor_index + 1]  # monitors[0] is all monitors
+            
+            # Adjust region coordinates relative to the monitor
+            x = region[0] - monitor['left']
+            y = region[1] - monitor['top']
+            width = region[2]
+            height = region[3]
+            
+            # Capture the region
+            screenshot = self.sct.grab({
+                'left': x,
+                'top': y,
+                'width': width,
+                'height': height,
+                'mon': monitor_index + 1  # Specify which monitor to capture
+            })
+            
+            # Convert to PIL Image
+            img = Image.frombytes('RGB', screenshot.size, screenshot.rgb)
+            
+            # Convert to grayscale for better OCR
+            img = img.convert('L')
+            
+            # Perform OCR
+            text = pytesseract.image_to_string(img)
+            
+            return text.strip()
+            
+        except Exception as e:
+            print(f"Error in OCR processing: {str(e)}")
+            return ""
 
     def __del__(self):
         """Clean up resources."""
         if hasattr(self, 'd3d'):
-            self.d3d.stop() 
+            self.d3d.stop()
+        self.sct.close() 

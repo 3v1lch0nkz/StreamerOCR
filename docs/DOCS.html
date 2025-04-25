@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamerOCR Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        .nav {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+        }
+        
+        .nav a {
+            margin-right: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .project-map {
+            margin: 20px 0;
+        }
+        
+        .file-tree {
+            margin-left: 20px;
+        }
+        
+        .requirements {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .requirements li {
+            margin-bottom: 15px;
+        }
+        
+        .requirements h4 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .license {
+            background-color: #e2e3e5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>StreamerOCR Documentation</h1>
+    
+    <div class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#setup">Setup & Installation</a>
+        <a href="#usage">Usage Guide</a>
+        <a href="#requirements">Requirements</a>
+        <a href="#project-map">Project Structure</a>
+        <a href="#license">License & Attributions</a>
+    </div>
+
+    <div class="section" id="overview">
+        <h2>1. Overview</h2>
+        <p>StreamerOCR is a powerful screen text recognition tool designed for streamers and content creators. It allows you to:</p>
+        <ul>
+            <li>Select and capture specific regions of your screen</li>
+            <li>Perform OCR (Optical Character Recognition) on the captured regions</li>
+            <li>Convert recognized text to speech</li>
+            <li>Save and manage multiple capture regions</li>
+            <li>Work across multiple monitors</li>
+        </ul>
+    </div>
+
+    <div class="section" id="setup">
+        <h2>2. Setup & Installation</h2>
+        
+        <div class="warning">
+            <h3>⚠️ Important: Tesseract OCR Required</h3>
+            <p>StreamerOCR requires Tesseract OCR to be installed separately. This is not included in the package.</p>
+            <ol>
+                <li>Download Tesseract OCR from: <a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank">UB-Mannheim Tesseract Installer</a></li>
+                <li>Run the installer</li>
+                <li>Add Tesseract to your system PATH (default: C:\Program Files\Tesseract-OCR)</li>
+                <li>Restart your computer after installation</li>
+            </ol>
+            <p>Without Tesseract OCR installed, StreamerOCR will not function properly.</p>
+        </div>
+        
+        <h3>Prerequisites</h3>
+        <ol>
+            <li>Python 3.8 or higher</li>
+            <li>Tesseract OCR (see above)</li>
+            <li>Windows operating system</li>
+        </ol>
+
+        <h3>Installation Steps</h3>
+        <pre><code>
+# Clone the repository
+git clone [repository-url]
+cd StreamerOCR
+
+# Create and activate virtual environment
+python -m venv venv
+.\venv\Scripts\activate  # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+        </code></pre>
+
+        <div class="note">
+            <h4>Note:</h4>
+            <p>Make sure Tesseract OCR is installed and accessible in your system PATH before running the application.</p>
+        </div>
+    </div>
+
+    <div class="section" id="usage">
+        <h2>3. Usage Guide</h2>
+        
+        <h3>Running the Application</h3>
+        <pre><code>python src/main.py</code></pre>
+
+        <h3>Hotkeys</h3>
+        <ul>
+            <li><code>Alt+Shift+Space</code>: Process selected region</li>
+            <li><code>Alt+Shift+M</code>: Select new region</li>
+            <li><code>Alt+Shift+N</code>: Exit application</li>
+        </ul>
+
+        <h3>Region Management</h3>
+        <ul>
+            <li>Click "Select Region" to choose a screen area</li>
+            <li>Use the region list to manage saved regions</li>
+            <li>Rename or delete regions as needed</li>
+            <li>Regions are automatically saved between sessions</li>
+        </ul>
+
+        <div class="note">
+            <h4>Multi-Monitor Support:</h4>
+            <p>The application supports multiple monitors. When selecting a region, you can choose which monitor to capture from using the monitor dropdown.</p>
+        </div>
+    </div>
+
+    <div class="section" id="requirements">
+        <h2>4. Requirements</h2>
+        
+        <h3>External Dependencies</h3>
+        <div class="requirements">
+            <li>
+                <h4>Tesseract OCR</h4>
+                <p>Required for text recognition. Not bundled with the application.</p>
+                <p>Download from: <a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank">UB-Mannheim Tesseract Installer</a></p>
+                <ul>
+                    <li>Version: 5.0.0 or higher recommended</li>
+                    <li>Installation path should be added to system PATH</li>
+                    <li>Default paths:
+                        <ul>
+                            <li>Windows: C:\Program Files\Tesseract-OCR</li>
+                            <li>Linux: /usr/bin/tesseract</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </div>
+
+        <h3>Python Dependencies</h3>
+        <pre><code>
+PyQt5==5.15.9
+pytesseract==0.3.10
+keyboard==0.13.5
+Pillow==11.2.1
+pyttsx3==2.90
+pywin32==310
+numpy==2.2.5
+mss==9.0.1
+comtypes==1.4.10
+
+# Build dependencies
+altgraph==0.17.4
+build==1.2.2.post1
+colorama==0.4.6
+packaging==25.0
+pefile==2023.2.7
+pyinstaller==6.13.0
+pyinstaller-hooks-contrib==2025.3
+pypiwin32==223
+pyproject_hooks==1.2.0
+PyQt5-Qt5==5.15.2
+PyQt5_sip==12.17.0
+pywin32-ctypes==0.2.3
+setuptools==79.0.1
+wheel==0.45.1
+        </code></pre>
+    </div>
+
+    <div class="section" id="project-map">
+        <h2>5. Project Structure</h2>
+        
+        <div class="project-map">
+            <h3>Source Code Structure</h3>
+            <div class="file-tree">
+                <pre>
+StreamerOCR/
+├── src/
+│   ├── __init__.py           # Package initialization
+│   ├── main.py              # Main application entry point
+│   ├── gui/
+│   │   ├── __init__.py
+│   │   └── region_selector.py # Screen region selection
+│   ├── ocr/
+│   │   ├── __init__.py
+│   │   └── processor.py      # OCR processing logic
+│   └── tts/
+│       ├── __init__.py
+│       └── speaker.py        # Text-to-speech functionality
+│
+├── tests/
+│   ├── test_basic.py        # Basic functionality tests
+│   ├── test_integration.py  # Integration tests
+│   ├── test_region.py       # Region selection tests
+│   └── test_ocr.py         # OCR functionality tests
+│
+├── resources/
+│   └── icon.png            # Application icon
+│
+├── docs/
+│   └── DOCS.html          # This documentation
+│
+├── requirements.txt        # Python dependencies
+├── setup.py               # Package setup configuration
+├── README.md             # Project overview
+└── run_tests.bat         # Test runner script
+                </pre>
+            </div>
+
+            <h3>Key Components</h3>
+            <ul>
+                <li><strong>Main Application (src/main.py)</strong>
+                    <ul>
+                        <li>StreamerOCR class: Main application window</li>
+                        <li>Region management and storage</li>
+                        <li>Hotkey management</li>
+                        <li>Multi-monitor support</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Region Selector (src/gui/region_selector.py)</strong>
+                    <ul>
+                        <li>Screen region selection interface</li>
+                        <li>Multi-monitor support</li>
+                        <li>Mouse event handling</li>
+                    </ul>
+                </li>
+                
+                <li><strong>OCR Processor (src/ocr/processor.py)</strong>
+                    <ul>
+                        <li>Screen capture functionality</li>
+                        <li>Tesseract OCR integration</li>
+                        <li>Image processing</li>
+                    </ul>
+                </li>
+                
+                <li><strong>TTS Speaker (src/tts/speaker.py)</strong>
+                    <ul>
+                        <li>Text-to-speech conversion</li>
+                        <li>Voice configuration</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="license">
+        <h2>6. License & Attributions</h2>
+        
+        <div class="license">
+            <h3>StreamerOCR License</h3>
+            <p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
+        </div>
+
+        <h3>Third-Party Libraries</h3>
+        <ul>
+            <li><strong>PyQt5</strong> - LGPL v3</li>
+            <li><strong>pytesseract</strong> - Apache License 2.0</li>
+            <li><strong>keyboard</strong> - MIT License</li>
+            <li><strong>Pillow</strong> - PIL Software License</li>
+            <li><strong>pyttsx3</strong> - MIT License</li>
+            <li><strong>pywin32</strong> - PSF License</li>
+            <li><strong>numpy</strong> - BSD License</li>
+            <li><strong>mss</strong> - MIT License</li>
+            <li><strong>comtypes</strong> - MIT License</li>
+        </ul>
+
+        <h3>External Tools</h3>
+        <ul>
+            <li><strong>Tesseract OCR</strong> - Apache License 2.0</li>
+        </ul>
+    </div>
+</body>
+</html> 
