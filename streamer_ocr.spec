@@ -12,12 +12,13 @@ src_path = os.path.abspath('src')
 datas = [('resources/icon.png', 'resources')]
 binaries = []
 hiddenimports = [
-    'PyQt5',
+    'pyttsx3.drivers',
+    'pyttsx3.drivers.sapi5',
     'pytesseract',
+    'PIL',
     'keyboard',
     'PIL._tkinter_finder',  # Required for PIL
     'PIL.ImageGrab',
-    'pyttsx3',
     'win32api',
     'win32con',
     'src.gui.region_selector',
@@ -71,4 +72,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=None,
 ) 
