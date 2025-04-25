@@ -1,56 +1,70 @@
 # StreamerOCR
 
-A lightweight desktop utility for streamers and gamers to capture and process text from specific screen regions using OCR technology.
+A lightweight desktop application that performs real-time OCR on selected screen regions and converts text to speech.
 
 ## Features
 
-- Region selection similar to snipping tool
-- OCR text recognition using Tesseract
-- Text-to-Speech output
-- System tray application
-- Configurable keyboard shortcuts
-- Region profile management
-
-## Prerequisites
-
-1. Python 3.11 or higher
-2. Tesseract OCR installed on your system
-   - Download from: https://github.com/UB-Mannheim/tesseract/wiki
-   - Make sure to add Tesseract to your system PATH
+- Screen region selection with visual feedback
+- Real-time OCR processing using Tesseract
+- Text-to-Speech conversion
+- Global hotkeys for quick access
+- Region persistence between sessions
 
 ## Installation
 
-1. Clone this repository
-2. Install required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Download the latest release from the releases page
+2. Extract the ZIP file to your desired location
+3. Run `StreamerOCR.exe`
 
 ## Usage
 
-1. Run the application:
+1. Launch StreamerOCR
+2. Click the "Select Region" button or press `Alt + Shift + R` to select a screen region
+3. Click and drag to select the desired area
+4. Press `Alt + Shift + Space` to process the selected region
+5. The application will read aloud any text found in the region
+
+## Keyboard Shortcuts
+
+- `Alt + Shift + Space` - Process the selected region
+- `Alt + Shift + R` - Select a new region
+- `Alt + Shift + Q` - Exit application
+
+## Development Setup
+
+1. Clone the repository
+2. Create a virtual environment:
    ```bash
-   python streamer_ocr.py
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run the application:
+   ```bash
+   python src/main.py
    ```
 
-2. The application will start in the system tray
-3. Right-click the tray icon and select "Configure"
-4. Click "Select Region" to define the area you want to capture
-5. Use the configured hotkey to capture and process the region
+## Building from Source
 
-## Configuration
+1. Install PyInstaller:
+   ```bash
+   pip install pyinstaller
+   ```
+2. Build the executable:
+   ```bash
+   pyinstaller streamer_ocr.spec
+   ```
+3. The executable will be created in the `dist` directory
 
-- Regions are automatically saved in `regions.json`
-- You can configure multiple regions and switch between them
-- The application remembers your last used region
+## Requirements
 
-## Troubleshooting
-
-If you encounter issues with Tesseract OCR:
-1. Verify Tesseract is installed correctly
-2. Check if Tesseract is in your system PATH
-3. Restart the application after making changes
+- Windows 10 or later
+- Tesseract OCR engine (included in the installation)
+- Python 3.8 or later (if running from source)
 
 ## License
 
-MIT License 
+This project is licensed under the MIT License - see the LICENSE file for details. 
