@@ -1,23 +1,37 @@
 import sys
 import json
 import keyboard
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget, QVBoxLayout, QPushButton, QLabel
+import warnings
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget, QVBoxLayout, QPushButton, QLabel, QStyle
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 
-from gui.region_selector import RegionSelector
-from ocr.processor import OCRProcessor
-from tts.speaker import TTSSpeaker
+# Filter out the deprecation warning
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+from src.gui.region_selector import RegionSelector
+from src.ocr.processor import OCRProcessor
+from src.tts.speaker import TTSSpeaker
 
 class StreamerOCR(QWidget):
     def __init__(self):
         super().__init__()
+        print("Initializing StreamerOCR...")
         self.ocr = OCRProcessor()
         self.tts = TTSSpeaker()
         self.current_region = None
+        self.selector = None
+        self.processing = False
         self.init_ui()
         self.setup_hotkey()
         self.load_regions()
+        
+        # Setup processing timer
+        self.process_timer = QTimer()
+        self.process_timer.timeout.connect(self.check_hotkey)
+        self.process_timer.start(100)  # Check every 100ms
+        
+        print("StreamerOCR initialized successfully")
 
     def init_ui(self):
         """Initialize the user interface."""
@@ -44,8 +58,8 @@ class StreamerOCR(QWidget):
         try:
             self.tray_icon.setIcon(QIcon("resources/icon.png"))
         except:
-            # If icon is not found, the application will still work
-            pass
+            # If icon is not found, create a default system tray icon
+            self.tray_icon.setIcon(self.style().standardIcon(QStyle.SP_ComputerIcon))
             
         tray_menu = QMenu()
         configure_action = tray_menu.addAction("Configure")
@@ -58,12 +72,21 @@ class StreamerOCR(QWidget):
 
     def setup_hotkey(self):
         """Setup the global hotkey for OCR processing."""
-        keyboard.add_hotkey('ctrl+shift+o', self.process_current_region)
+        print("Setting up hotkey (Ctrl+Shift+O)...")
+
+    def check_hotkey(self):
+        """Check if the hotkey is pressed."""
+        if not self.processing and keyboard.is_pressed('ctrl+shift+o'):
+            self.process_current_region()
 
     def select_region(self):
         """Open the region selector."""
-        self.selector = RegionSelector()
-        self.selector.region_selected.connect(self.on_region_selected)
+        if self.selector is None or not self.selector.isVisible():
+            self.hide()  # Hide the main window while selecting
+            self.selector = RegionSelector()
+            self.selector.region_selected.connect(self.on_region_selected)
+            # Connect the close event to show the main window again
+            self.selector.destroyed.connect(self.show)
 
     def on_region_selected(self, region):
         """Handle the selected region."""
@@ -73,11 +96,30 @@ class StreamerOCR(QWidget):
 
     def process_current_region(self):
         """Process the currently selected region with OCR and TTS."""
-        if not self.current_region:
+        if self.processing:
             return
             
-        text = self.ocr.process_region(self.current_region)
-        self.tts.speak(text)
+        print("\nProcessing current region...")
+        if not self.current_region:
+            print("No region selected!")
+            return
+
+        self.processing = True
+        print(f"Capturing region: {self.current_region}")
+        
+        try:
+            text = self.ocr.process_region(self.current_region)
+            print(f"OCR Result: {text}")
+            
+            if text and text.strip():
+                print("Text found, converting to speech...")
+                self.tts.speak(text)
+            else:
+                print("No text found in the region")
+        except Exception as e:
+            print(f"Error processing region: {e}")
+        finally:
+            self.processing = False
 
     def save_regions(self):
         """Save the current region configuration."""
@@ -96,9 +138,17 @@ class StreamerOCR(QWidget):
             pass
 
 def main():
-    app = QApplication(sys.argv)
+    # Create the QApplication instance
+    if not QApplication.instance():
+        app = QApplication(sys.argv)
+    else:
+        app = QApplication.instance()
+        
+    # Create and show the main window
     window = StreamerOCR()
     window.show()
+    
+    # Start the event loop
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
