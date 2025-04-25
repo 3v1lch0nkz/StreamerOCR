@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamerOCR Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        .nav {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .nav a {
+            margin-right: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .project-map {
+            margin: 20px 0;
+        }
+        
+        .file-tree {
+            margin-left: 20px;
+        }
+        
+        .requirements {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .requirements li {
+            margin-bottom: 15px;
+        }
+        
+        .requirements h4 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>StreamerOCR Documentation</h1>
+    
+    <div class="nav">
+        <a href="#setup">Setup & Usage</a>
+        <a href="#project-map">Project Map</a>
+        <a href="#requirements">Requirements</a>
+    </div>
+
+    <div class="section" id="setup">
+        <h2>1. Setup, Installation, and Usage</h2>
+        
+        <h3>Installation</h3>
+        <pre><code>
+# Clone the repository
+git clone [repository-url]
+cd StreamerOCR
+
+# Create and activate virtual environment
+python -m venv venv
+.\venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/Mac
+
+# Install dependencies
+pip install -r requirements.txt
+        </code></pre>
+
+        <h3>Configuration</h3>
+        <p>The application requires Tesseract OCR to be installed on your system:</p>
+        <ol>
+            <li>Download and install Tesseract OCR (see Requirements section)</li>
+            <li>Ensure Tesseract is in your system PATH or in one of the default locations:
+                <ul>
+                    <li>C:\Program Files\Tesseract-OCR</li>
+                    <li>C:\Program Files (x86)\Tesseract-OCR</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Usage</h3>
+        <p>To run the application:</p>
+        <pre><code>python src/main.py</code></pre>
+        
+        <p>Hotkeys:</p>
+        <ul>
+            <li><code>Ctrl+Shift+O</code>: Process selected region</li>
+            <li><code>Ctrl+Shift+K</code>: Show/restore window</li>
+            <li><code>Ctrl+Shift+M</code>: Exit application</li>
+        </ul>
+
+        <h3>Running Tests</h3>
+        <p>The project includes several test suites:</p>
+        <pre><code>
+# Run all tests
+python run_tests.bat
+
+# Run individual test suites
+python tests/test_basic.py      # Basic functionality tests
+python tests/test_integration.py # Integration tests
+python tests/test_region.py     # Region selection tests
+python tests/test_ocr.py        # OCR functionality tests
+        </code></pre>
+    </div>
+
+    <div class="section" id="project-map">
+        <h2>2. Project Map</h2>
+        
+        <div class="project-map">
+            <h3>Source Code Structure</h3>
+            <div class="file-tree">
+                <pre>
+StreamerOCR/
+├── src/
+│   ├── __init__.py           # Package initialization
+│   ├── main.py              # Main application entry point
+│   ├── gui/
+│   │   ├── __init__.py
+│   │   └── region_selector.py # Screen region selection
+│   ├── ocr/
+│   │   ├── __init__.py
+│   │   └── processor.py      # OCR processing logic
+│   └── tts/
+│       ├── __init__.py
+│       └── speaker.py        # Text-to-speech functionality
+│
+├── tests/
+│   ├── test_basic.py        # Basic functionality tests
+│   ├── test_integration.py  # Integration tests
+│   ├── test_region.py       # Region selection tests
+│   └── test_ocr.py         # OCR functionality tests
+│
+├── resources/
+│   └── icon.png            # Application icon
+│
+├── docs/
+│   └── index.html          # This documentation
+│
+├── requirements.txt        # Python dependencies
+├── setup.py               # Package setup configuration
+├── README.md             # Project overview
+└── run_tests.bat         # Test runner script
+                </pre>
+            </div>
+
+            <h3>Key Components</h3>
+            <ul>
+                <li><strong>Main Application (src/main.py)</strong>
+                    <ul>
+                        <li>StreamerOCR class: Main application window</li>
+                        <li>System tray integration</li>
+                        <li>Hotkey management</li>
+                        <li>Configuration handling</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Region Selector (src/gui/region_selector.py)</strong>
+                    <ul>
+                        <li>Screen region selection interface</li>
+                        <li>Transparent overlay</li>
+                        <li>Mouse event handling</li>
+                    </ul>
+                </li>
+                
+                <li><strong>OCR Processor (src/ocr/processor.py)</strong>
+                    <ul>
+                        <li>Screen capture functionality</li>
+                        <li>Tesseract OCR integration</li>
+                        <li>Image processing</li>
+                    </ul>
+                </li>
+                
+                <li><strong>TTS Speaker (src/tts/speaker.py)</strong>
+                    <ul>
+                        <li>Text-to-speech conversion</li>
+                        <li>Voice configuration</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="requirements">
+        <h2>3. External Requirements</h2>
+        
+        <div class="requirements">
+            <li>
+                <h4>Tesseract OCR</h4>
+                <p>Required for text recognition. Not bundled with the application.</p>
+                <p>Download from: <a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank">UB-Mannheim Tesseract Installer</a></p>
+                <ul>
+                    <li>Version: 5.0.0 or higher recommended</li>
+                    <li>Installation path should be added to system PATH</li>
+                    <li>Default paths:
+                        <ul>
+                            <li>Windows: C:\Program Files\Tesseract-OCR</li>
+                            <li>Linux: /usr/bin/tesseract</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <h4>Python Dependencies</h4>
+                <p>These are automatically installed via requirements.txt:</p>
+                <ul>
+                    <li>PyQt5 (5.15.9) - GUI framework</li>
+                    <li>pytesseract (0.3.10) - Tesseract OCR wrapper</li>
+                    <li>Pillow (9.5.0) - Image processing</li>
+                    <li>pyttsx3 (2.90) - Text-to-speech engine</li>
+                    <li>keyboard (0.13.5) - Hotkey handling</li>
+                </ul>
+            </li>
+
+            <div class="note">
+                <strong>Note:</strong> Some features may require additional system permissions:
+                <ul>
+                    <li>Screen capture functionality requires display access</li>
+                    <li>Text-to-speech may require audio output permissions</li>
+                    <li>Global hotkeys may require administrative privileges on some systems</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

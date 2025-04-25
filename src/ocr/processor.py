@@ -3,7 +3,8 @@ from PIL import Image
 import os
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QScreen
-import tempfile
+from PyQt5.QtCore import QBuffer, QByteArray
+import io
 
 class OCRProcessor:
     """Handles OCR processing of screen regions."""
@@ -44,19 +45,17 @@ class OCRProcessor:
                 print("Error: Screen capture failed - null pixmap")
                 return None
                 
-            # Save to temporary file
-            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp_file:
-                temp_path = tmp_file.name
-                pixmap.save(temp_path, "PNG")
-                
-            # Load with PIL
-            img = Image.open(temp_path)
+            # Convert QPixmap to PIL Image using memory buffer
+            buffer = QBuffer()
+            buffer.open(QBuffer.ReadWrite)
+            pixmap.save(buffer, "PNG")
             
-            # Clean up temporary file
-            os.unlink(temp_path)
+            # Convert QBuffer to PIL Image
+            pil_img = Image.open(io.BytesIO(buffer.data()))
+            buffer.close()
             
             print("Screenshot captured successfully")
-            return img
+            return pil_img
             
         except Exception as e:
             print(f"Error capturing screenshot: {e}")
